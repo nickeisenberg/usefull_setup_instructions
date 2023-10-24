@@ -2,7 +2,7 @@
 
 1. Add `Port <port_number>` to `/etc/ssh/ssh_config` and `/etc/ssh_sshd_config`. 
    After doing this, you will need to `sudo systemctl restart ssh` and 
-   `sudo systemctl restart sshd`
+   `sudo systemctl restart sshd`. There are other setting in here that should be set.
 
 2. Allow the port through the firewall with `sudo ufw allow <port_number>/tcp`.
 
