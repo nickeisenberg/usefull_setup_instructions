@@ -24,3 +24,8 @@
 
 * The first time you log in, you use `username=neo4j` and `password=neo4j`. It will then
   ask you to set a password.
+
+* To change the data directory, go to `/etc/neo4j/` and edit the file `neo4j.conf` and 
+  change edit the line to `server.directories.data=<path to new dir>`. Once you start 
+  neo4j back up, the databases will be stored to this folder. Only one server can be 
+  attached to one folder.
