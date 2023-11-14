@@ -14,4 +14,3 @@
    `wifi -> view wifi equipment -> advanced settings -> port forwarding`. Note that the
    internal IP address may change so that the router's port forward may need to be updated 
    from time to time.
-
