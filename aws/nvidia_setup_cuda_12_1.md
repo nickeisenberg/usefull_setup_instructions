@@ -1,29 +1,33 @@
-4. Apon first SSH into the instance, update apt and upgrade by running `sudo apt update` and
-`sudo apt upgrade`. 
+4. Apon first SSH into the instance, update apt and upgrade by running 
+   `sudo apt update` and `sudo apt upgrade`. 
 
 5. This will require a reboot to reset the headers.
 
 7. Run `lspci | grep -i nvidia` to check if there actually is a gpu available.
 
-8. Next we will install the GPU drivers. The steps are extremely important to follow exactly.
+8. Next we will install the GPU drivers. The steps are extremely important to 
+   follow exactly.
 
 9. Run `sudo apt install nvidia-driver-535`
 
 10. Reboot the instance by doing the same thing we did above.
 
-11. SSH back into the instance and run `nvidia-smi`. If this works then continue. If there is
-    an error message then maybe you messed up something from above. Ignore the CUDA version
-    that is illustrated in the `nvidia-smi` output. THIS IS NOT THE CUDA VERSION 
-    INSTALLED, but the highest CUDA version that is approved. The driver is 
-    backward compatible so older CUDA version will still work.
+11. SSH back into the instance and run `nvidia-smi`. If this works then 
+    continue. If there is
+    an error message then maybe you messed up something from above. Ignore 
+    the CUDA version that is illustrated in the `nvidia-smi` output. THIS 
+    IS NOT THE CUDA VERSION INSTALLED, but the highest CUDA version that is 
+    approved. The driver is backward compatible so older CUDA version will 
+    still work.
 
-12. Next we need to install the cuda toolkit. We will use 12.1 as this is the most widely
-    accepted version as of now.
+12. Next we need to install the cuda toolkit. We will use 12.1 as this is 
+    the most widely accepted version as of now.
 
 2. Install some dependencies needed for the cuda tool kit with 
    `sudo apt-get install gcc make libboost-all-dev`
 
-13. Run `mkdir -p ~/Software/cuda` and `cd` into this directory with `cd ~/Software/cuda`.
+13. Run `mkdir -p ~/Software/cuda` and `cd` into this directory with 
+    `cd ~/Software/cuda`.
 
 14. Go to the 
     [cuda toolkit download](https://developer.nvidia.com/cuda-12-1-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=runfile_local)
@@ -67,8 +71,8 @@
     Logfile is /var/log/cuda-installer.log
     ```
 
-18. Edit the `~/.bashrc` (or `~/.bash_profile` if you use that) and add the follwing lines
-    anywhere in these files:
+18. Edit the `~/.bashrc` (or `~/.bash_profile` if you use that) and add the 
+    follwing lines anywhere in these files:
 
     ```
     export PATH="/usr/local/cuda-12.1/bin:$PATH"
@@ -107,8 +111,8 @@
     pip3 install torch torchvision torchaudio
     ```
 
-    Lastly, create a python script and put the following into it and run it. If the script
-    returns all the affirmative responses then you are all good.
+    Lastly, create a python script and put the following into it and run it. 
+    If the script returns all the affirmative responses then you are all good.
 
     ```
     """
