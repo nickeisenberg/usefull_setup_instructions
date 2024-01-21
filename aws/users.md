@@ -26,8 +26,12 @@
 
 * Create a group for the data drive with `sudo groupadd drive_group`
 
-* Add this group to the users with `sudo usermod -aG drive_group <user>`
-
 * Add this group to the drive with `sudo chown -R :drive_group /<drive>`
 
+* Add this group to the users with `sudo usermod -aG drive_group <user>`
+
 * Run `sudo chmod -R 770 /<drive>` to give read write to the group.
+
+# View all users that are set up.
+
+* The user that are set up will appear at the bottom of `/etc/passwd`
