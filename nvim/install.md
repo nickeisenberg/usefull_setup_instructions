@@ -26,7 +26,7 @@
 
 * `git pull`
 
-* use `git branch -` to check all releases. Then pick a release
+* use `git branch -r` to check all releases. Then pick a release
   `git checkout release-0.9`.
 
 * `make distclean && make CMAKE_BUILD_TYPE=Release`

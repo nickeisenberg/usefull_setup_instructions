@@ -25,7 +25,7 @@ following.
   Do not put quotation marks around the UUID. Here is the menaing of
   `defaults 0 2` according to chat gpt.
 
-  ``` 
+  ```markdown 
   defaults: This is a set of default mount options that are applied when
   the filesystem is mounted. The defaults option actually implies several other
   options: rw (read-write), suid (allow set-user-identifier or
@@ -36,13 +36,13 @@ following.
   Essentially, when you specify defaults, you are applying a common, standard
   set of options that are suitable for most filesystems.
 
-  0: This is the dump field. The dump utility uses this field to determine when
+  0. This is the dump field. The dump utility uses this field to determine when
   to make a backup of the filesystem. A value of 0 means that the filesystem
   will never be backed up by the dump program. This is a common setting for
   most systems, as dump is an older utility and not widely used in many modern
   Linux distributions.
 
-  2: This is the pass (or fsck order) field. It determines the order in which
+  2. This is the pass (or fsck order) field. It determines the order in which
   filesystem checks are done at boot time by the fsck program. The root
   filesystem should have this value set to 1, and other filesystems that should
   be checked should have it set to 2. This means they will be checked after the
