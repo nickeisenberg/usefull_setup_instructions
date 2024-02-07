@@ -17,7 +17,9 @@
 
   4. `source ~/.bash_profile`
 
-  5. `npm --version` and `node --version` will now work.
+  5. run `nvm install --lts`
+
+  6. `npm --version` and `node --version` will now work.
 
 # Installing from source
 * Clone neovim, `git clone https://github.com/neovim/neovim.git`
