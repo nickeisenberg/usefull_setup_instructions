@@ -33,9 +33,19 @@
 * Run `sudo chmod -R 770 /<drive>` to give read write to the group.
 
 # ensure that drive_groups is always added as the group for new things in /<drive>
+Install `acl` with `sudo apt-get install acl` and then do the following
+
 ```bash
-sudo chmod g+s /<drive>
-sudo find /<drive> -type d -exec chmod g+s {} +
+sudo chmod g+s /drive
+
+sudo find /drive -type d -exec chmod g+s {} +
+
+sudo find /drive -type d -exec chmod g+rwxs {} +
+
+sudo find /drive -type f -exec chmod g+rw {} +
+
+sudo setfacl -d -m g:sharedgroup:rwX /drive
+sudo setfacl -m g:sharedgroup:rwX /drive
 ```
 
 
