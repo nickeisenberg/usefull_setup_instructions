@@ -32,6 +32,13 @@
 
 * Run `sudo chmod -R 770 /<drive>` to give read write to the group.
 
+# ensure that drive_groups is always added as the group for new things in /<drive>
+```bash
+sudo chmod g+s /<drive>
+sudo find /<drive> -type d -exec chmod g+s {} +
+```
+
+
 # View all users that are set up.
 
 * The user that are set up will appear at the bottom of `/etc/passwd`
