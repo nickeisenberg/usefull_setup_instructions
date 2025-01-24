@@ -43,6 +43,23 @@ else
     echo "npm is installed. Version: $(npm --version)"
 fi
 
+# Check if tree-sitter is installed
+if ! command -v tree-sitter &> /dev/null; then
+    echo "tree-sitter is not installed. Installing via NVM..."
+    # Install Node.js LTS version using NVM
+    nvm install -g tree-sitter-cli
+else
+    echo "tree-sitter is already installed. Version: $(tree-sitter --version)"
+fi
+
+# Verify tree-sitter installation
+if ! command -v tree-sitter &> /dev/null; then
+    echo "Error: tree-sitter still not found after installation!"
+    exit 1
+else
+    echo "tree-sitter is installed. Version: $(tree-sitter --version)"
+fi
+
 # Install Neovim
 SOFTWARE_DIR=~/software
 NEOVIM_DIR="$SOFTWARE_DIR/neovim"
@@ -69,3 +86,10 @@ make CMAKE_BUILD_TYPE=Release
 sudo make install
 
 echo "Neovim installation completed successfully!"
+
+echo "installing rip grep"
+mkdir -p ~/software/rip_grep
+cd ~/software/grep
+
+curl -LO https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep_14.1.0-1_amd64.deb
+sudo dpkg -i ripgrep_14.1.0-1_amd64.deb
