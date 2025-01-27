@@ -6,9 +6,14 @@ set -e  # Exit immediately if a command fails
 sudo apt update && sudo apt upgrade
 sudo apt install -y cmake unzip gettext curl git
 
+# Create software directory if it doesn't exist
+SOFTWARE_DIR=~/software
+mkdir -p "$SOFTWARE_DIR"
+
 # Install NVM (Node Version Manager)
-mkdir -p ~/software/node
-cd ~/software/node
+NODE_DIR=$SOFTWARE_DIR/node
+mkdir -p $NODE_DIR
+cd $NODE_DIR
 
 curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh -o install_nvm.sh
 bash install_nvm.sh
@@ -61,11 +66,8 @@ else
 fi
 
 # Install Neovim
-SOFTWARE_DIR=~/software
 NEOVIM_DIR="$SOFTWARE_DIR/neovim"
 
-# Create software directory if it doesn't exist
-mkdir -p "$SOFTWARE_DIR"
 
 # Clone or update Neovim repository
 if [ ! -d "$NEOVIM_DIR" ]; then
@@ -88,8 +90,10 @@ sudo make install
 echo "Neovim installation completed successfully!"
 
 echo "installing rip grep"
-mkdir -p ~/software/rip_grep
-cd ~/software/grep
+
+RIP_GREP_DIR=$SOFTWARE_DIR/rip_grep
+mkdir -p $RIP_GREP_DIR 
+cd $RIP_GREP_DIR
 
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep_14.1.0-1_amd64.deb
 sudo dpkg -i ripgrep_14.1.0-1_amd64.deb
