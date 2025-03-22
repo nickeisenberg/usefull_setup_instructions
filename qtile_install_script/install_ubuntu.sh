@@ -1,4 +1,5 @@
 qtile_src_dir="${HOME}/.local/src/qtile"
+qtile_bin_dir="${HOME}/.local/bin"
 
 mkdir -p "${qtile_src_dir}"
 
@@ -60,8 +61,17 @@ fi
 pip install \
 	xcffib \
 	pulsectl-asyncio \
+	qtile \
 	psutil \
 	iwlib || exit 1
+
+qtile_bin="${qtile_src_dir}/.venv/bin/qtile"
+if [[ ! -x "${qtile_bin}" ]]; then
+	echo "qtile bin not found in ${qtile_src_dir}/.venv/bin/"
+	exit 1
+fi
+
+ln -s "${qtile_bin}" "${qtile_bin_dir}"
 
 # Create .desktop entry
 qtile_desktop_entry="/usr/share/xsessions/qtile.desktop"
