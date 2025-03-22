@@ -61,6 +61,7 @@ fi
 pip install \
 	xcffib \
 	pulsectl-asyncio \
+	numpy \
 	qtile \
 	psutil \
 	iwlib || exit 1
