@@ -45,7 +45,12 @@ cd "$vim_repo_path/src" || exit 1
 
 mkdir -p "$vim_bin_and_share_root"
 
-./configure --with-x --prefix="$vim_bin_and_share_root" || exit 1
+./configure \
+  --with-x \
+  --enable-gui=auto \
+  --enable-python3interp=yes \
+  --with-python3-config-dir=$(python3-config --configdir) \
+  --prefix="$vim_bin_and_share_root" || exit 1
 make || exit 1
 sudo make install || exit 1
 

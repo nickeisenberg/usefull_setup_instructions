@@ -7,7 +7,7 @@ sudo apt update && sudo apt upgrade
 sudo apt install -y cmake unzip gettext curl git
 
 # Create software directory if it doesn't exist
-SOFTWARE_DIR=~/software
+SOFTWARE_DIR=~/.local/nvim
 mkdir -p "$SOFTWARE_DIR"
 
 # Install NVM (Node Version Manager)
