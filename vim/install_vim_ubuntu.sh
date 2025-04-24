@@ -1,9 +1,9 @@
 #!/bin/bash
 
-vim_repo_path="${HOME}/.local/src/vim"
-vim_bin_and_share_root="${HOME}/.local"
+CLONE_VIM_REPO_TO="${HOME}/.local/src/vim"
+VIM_CONFIGURE_PREFIX="${HOME}/.local"
 
-my_pwd=$(pwd)
+CURRENT_PWD=$(pwd)
 
 continue_on() {
 	case "$1" in
@@ -38,21 +38,24 @@ sudo apt install -y \
 	libncurses-dev
 
 
-rm -rf "$vim_repo_path"
-mkdir -p "$vim_repo_path"
-git clone https://github.com/vim/vim.git "$vim_repo_path" || exit 1
-cd "$vim_repo_path/src" || exit 1
+rm -rf "$CLONE_VIM_REPO_TO"
+mkdir -p "$CLONE_VIM_REPO_TO"
 
-mkdir -p "$vim_bin_and_share_root"
+git clone https://github.com/vim/vim.git "$CLONE_VIM_REPO_TO" || exit 1
+
+cd "$CLONE_VIM_REPO_TO/src" || exit 1
+
+mkdir -p "$VIM_CONFIGURE_PREFIX"
 
 ./configure \
   --with-x \
   --enable-gui=auto \
   --enable-python3interp=yes \
   --with-python3-config-dir=$(python3-config --configdir) \
-  --prefix="$vim_bin_and_share_root" || exit 1
+  --prefix="$VIM_CONFIGURE_PREFIX" || exit 1
+
 make || exit 1
 sudo make install || exit 1
 
-cd "$my_pwd" || exit 1
+cd "$CURRENT_PWD" || exit 1
 echo "Vim installation complete."
