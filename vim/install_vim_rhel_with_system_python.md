@@ -1,6 +1,5 @@
 * install dependencies
 ```bash
-sudo dnf install -y python3.11 python3.11-devel
 sudo dnf builddep -y vim
 ```
 
@@ -21,8 +20,8 @@ PREFIX="${HOME}/.local"
 	--with-x \
 	--enable-python3interp \
 	--enable-fail-if-missing \
-	--with-python3-command=$(which python3.11) \
-	--with-python3-config-dir=$(python3.11-config --configdir) \
+	--with-python3-command=$(which python3) \
+	--with-python3-config-dir=$(python3-config --configdir) \
 	--prefix="${PREFIX}"
 ```
 
