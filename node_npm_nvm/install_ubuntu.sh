@@ -1,7 +1,6 @@
 #!/bin/bash
 
 nvm_repo_path="${HOME}/.local/src/nvm"
-bin_dir="${HOME}/.local/bin"
 
 my_pwd=$(pwd)
 

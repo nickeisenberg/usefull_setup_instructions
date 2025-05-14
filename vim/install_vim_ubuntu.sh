@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# requires python3.11 as a quick fix
+
 CLONE_VIM_REPO_TO="${HOME}/.local/src/vim"
 VIM_CONFIGURE_PREFIX="${HOME}/.local"
 
@@ -48,14 +50,15 @@ cd "$CLONE_VIM_REPO_TO/src" || exit 1
 mkdir -p "$VIM_CONFIGURE_PREFIX"
 
 ./configure \
-  --with-x \
-  --enable-gui=auto \
-  --enable-python3interp=yes \
-  --with-python3-config-dir=$(python3-config --configdir) \
-  --prefix="$VIM_CONFIGURE_PREFIX" || exit 1
+	--with-features=huge \
+	--with-x \
+	--enable-python3interp \
+	--enable-fail-if-missing \
+	--with-python3-command="python3.11" \
+	--with-python3-config-dir=$(python3.11-config --configdir) \
+	--prefix="${VIM_CONFIGURE_PREFIX}"
 
-make || exit 1
-sudo make install || exit 1
+make -j install prefix="${VIM_CONFIGURE_PREFIX}" || exit 1
 
 cd "$CURRENT_PWD" || exit 1
 echo "Vim installation complete."
