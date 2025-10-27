@@ -7,6 +7,7 @@ mkdir -p "${qtile_src_dir}"
 if [[ ! -d "${qtile_repo_dir}" ]]; then
 	git clone https://github.com/qtile/qtile.git "${qtile_repo_dir}"
 fi
+
 rm -rf ${qtile_repo_dir}/build
 rm -rf ${qtile_repo_dir}/qtile.egg-info
 
@@ -55,14 +56,15 @@ cd "${qtile_repo_dir}"
 git fetch --tags
 git checkout v0.33.0
 pip install --no-cache-dir . --config-settings=backend=wayland qtile[wayland]
+# pip install . --config-settings=backend=wayland
 
 # for non-fedora
 # pip install iwlib
 
 qtile_bin="${qtile_src_dir}/.venv/bin/qtile"
 if [[ ! -x "${qtile_bin}" ]]; then
-        echo "qtile bin not found in ${qtile_src_dir}/.venv/bin/"
-        exit 1
+    echo "qtile bin not found in ${qtile_src_dir}/.venv/bin/"
+    exit 1
 fi
 
 unlink "${link_qtile_bin_to}/qtile"
