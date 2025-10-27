@@ -1,18 +1,14 @@
 qtile_src_dir="${HOME}/.local/src/qtile"
-qtile_bin_dir="${HOME}/.local/bin"
+qtile_repo_dir="${HOME}/.local/src/qtile/qtile"
+link_qtile_bin_to="${HOME}/.local/bin"
 
 mkdir -p "${qtile_src_dir}"
 
-continue_on() {
-        case "$1" in
-                [Yy])
-                        return 0
-                        ;;
-                *)
-                        return 1
-                        ;;
-        esac
-}
+if [[ ! -d "${qtile_repo_dir}" ]]; then
+	git clone https://github.com/qtile/qtile.git "${qtile_repo_dir}"
+fi
+rm -rf ${qtile_repo_dir}/build
+rm -rf ${qtile_repo_dir}/qtile.egg-info
 
 # Check for Python 3
 if ! python3 --version >/dev/null 2>&1; then
@@ -28,27 +24,38 @@ python_version="${major}.${minor}"
 echo "Detected Python version: $python_version"
 
 # Set up virtual environment
-python3 -m venv "${qtile_src_dir}/.venv"
+if [[ ! -d "${qtile_src_dir}/.venv" ]]; then
+	python3 -m venv "${qtile_src_dir}/.venv"
+fi
 source "${qtile_src_dir}/.venv/bin/activate"
+pip uninstall -y qtile
 
-if [[ "$(which python)" != "${HOME}/.local/src/qtile/.venv/bin/python" ]]; then
+if [[ "$(which python)" != "${qtile_src_dir}/.venv/bin/python" ]]; then
         echo "venv is not properly activated"
         echo "$(which python)"
         exit 1
 fi
 
-sudo dnf install \
+sudo dnf install -y \
+	wlroots0.17 \
+	wlroots0.17-devel \
+	wayland-protocols-devel \
+	libffi-devel \
 	cairo-devel \
-    wayland-protocols-devel
+	pkg-config \
+	gcc \
+	python3-devel
 
 # Install Python dependencies
 pip install \
-        xcffib \
-        pulsectl-asyncio \
-        numpy \
-        psutil || exit 1
+    pulsectl-asyncio \
+    numpy \
+    psutil || exit 1
 
-pip install /home/nicholas/qtile --config-settings=backend=wayland
+cd "${qtile_repo_dir}"
+git fetch --tags
+git checkout v0.33.0
+pip install --no-cache-dir . --config-settings=backend=wayland qtile[wayland]
 
 # for non-fedora
 # pip install iwlib
@@ -59,5 +66,5 @@ if [[ ! -x "${qtile_bin}" ]]; then
         exit 1
 fi
 
-unlink "${qtile_bin_dir}/qtile"
-ln -s "${qtile_bin}" "${qtile_bin_dir}"
+unlink "${link_qtile_bin_to}/qtile"
+ln -s "${qtile_bin}" "${link_qtile_bin_to}"
