@@ -28,13 +28,12 @@ if [[ ! -d "${qtile_src_dir}/.venv" ]]; then
 	python3 -m venv "${qtile_src_dir}/.venv"
 fi
 source "${qtile_src_dir}/.venv/bin/activate"
-pip uninstall -y qtile
-
 if [[ "$(which python)" != "${qtile_src_dir}/.venv/bin/python" ]]; then
         echo "venv is not properly activated"
         echo "$(which python)"
         exit 1
 fi
+pip uninstall -y qtile
 
 sudo dnf install -y \
 	wlroots0.17 \
