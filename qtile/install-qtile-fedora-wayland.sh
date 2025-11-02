@@ -1,5 +1,9 @@
-qtile_save_root="${HOME}/.local/src/qtile"
-link_qtile_bin_to="${HOME}/.local/bin"
+# qtile_save_root="${HOME}/.local/src/qtile"
+# link_qtile_bin_to="${HOME}/.local/bin"
+
+qtile_save_root="${HOME}/qtile-wlan-fix"
+branch="wlan--to-support-iw"
+link_qtile_bin_to="${qtile_save_root}/bin"
 
 if [[ ! -d ${link_qtile_bin_to} ]]; then
 	mkdir -p ${link_qtile_bin_to}
@@ -62,18 +66,19 @@ pip install \
 
 cd "${qtile_repo_dir}"
 git fetch --tags
-# git checkout v0.33.0
-# pip install --no-cache-dir . --config-settings=backend=wayland qtile[wayland]
-git checkout master
-pip install . --config-settings=backend=wayland
-
-# for non-fedora
-# pip install iwlib
+git checkout ${branch}
+if [[ ${branch} == *"v0."* ]]; then
+	# this is only for v0.33 and most likely less
+	pip install --no-cache-dir . --config-settings=backend=wayland qtile[wayland]
+else
+	# this is currently for master which is v0.33.1.dev
+	pip install . --config-settings=backend=wayland
+fi
 
 qtile_bin="${qtile_save_root}/.venv/bin/qtile"
 if [[ ! -x "${qtile_bin}" ]]; then
     echo "qtile bin not found in ${qtile_save_root}/.venv/bin/"
-    exit 1
+    exit 2
 fi
 
 if [[ -f "${link_qtile_bin_to}/qtile" ]]; then
