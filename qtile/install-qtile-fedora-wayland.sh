@@ -1,18 +1,33 @@
-# qtile_save_root="${HOME}/.local/src/qtile"
-# link_qtile_bin_to="${HOME}/.local/bin"
+#--------------------------------------------------
+# Set these variables
+#--------------------------------------------------
 
-qtile_save_root="${HOME}/qtile-wlan-fix"
-branch="wlan--to-support-iw"
-link_qtile_bin_to="${qtile_save_root}/bin"
+# qtile_save_root is the location where to clone the qtile repo too. A virtual
+# env will also be made in the localtion which will be used for the qtile installation.
+# So after install, you will have
+# ./qtile
+# |__qtile (the repo)
+# |__.venv (the venv used for installing qtile)
+qtile_save_root="${HOME}/qtile"
+
+# which branch of the repo do you want to install
+branch="master"
+
+# where do you want a symlink of the qtile bin to be linked to. This the location
+# does not exist, the script will mkdir -p.
+link_qtile_bin_to="${HOME}/.local/bin"
+
+#--------------------------------------------------
+# nothing below needs to be set unless there are bugs with the install
+#--------------------------------------------------
 
 if [[ ! -d ${link_qtile_bin_to} ]]; then
 	mkdir -p ${link_qtile_bin_to}
 fi
 
-qtile_repo_dir="${qtile_save_root}/qtile"
-
 mkdir -p "${qtile_save_root}"
 
+qtile_repo_dir="${qtile_save_root}/qtile"
 if [[ ! -d "${qtile_repo_dir}" ]]; then
 	git clone https://github.com/qtile/qtile.git "${qtile_repo_dir}"
 fi
@@ -37,6 +52,7 @@ echo "Detected Python version: $python_version"
 if [[ ! -d "${qtile_save_root}/.venv" ]]; then
 	python3 -m venv "${qtile_save_root}/.venv"
 fi
+
 source "${qtile_save_root}/.venv/bin/activate"
 if [[ "$(which python)" != "${qtile_save_root}/.venv/bin/python" ]]; then
         echo "venv is not properly activated"
@@ -65,6 +81,7 @@ pip install \
     psutil || exit 1
 
 cd "${qtile_repo_dir}"
+git fetch --all
 git fetch --tags
 git checkout ${branch}
 if [[ ${branch} == *"v0."* ]]; then
